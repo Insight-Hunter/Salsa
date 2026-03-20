@@ -1,4 +1,4 @@
-// apps/insighthunter-payroll/wrangler.jsonc
+
 {
   "name": "insighthunter-payroll",
   "main": "src/index.ts",

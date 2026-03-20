@@ -1,0 +1,8 @@
+{
+  "name": "insighhunter-payroll",
+  "compatibility_date": "2025-01-01",
+  "observability": { "enabled": true },
+  "vars": {
+    "SALSA_BASE_URL": "https://api.salsa.dev"
+  }
+}

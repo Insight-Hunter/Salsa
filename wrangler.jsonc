@@ -1,8 +1,46 @@
+// apps/insighthunter-payroll/wrangler.jsonc
 {
-  "name": "insighhunter-payroll",
-  "compatibility_date": "2025-01-01",
+  "name": "insighthunter-payroll",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-01",
+  "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "insighthunter-payroll",
+      "database_id": "<YOUR_D1_DATABASE_ID>"
+    }
+  ],
+
+  "kv_namespaces": [
+    {
+      "binding": "PAYROLL_KV",
+      "id": "<YOUR_KV_NAMESPACE_ID>"
+    }
+  ],
+
+  "queues": {
+    "producers": [
+      { "binding": "PAYROLL_QUEUE", "queue": "payroll-events" }
+    ],
+    "consumers": [
+      { "queue": "payroll-events", "max_batch_size": 10, "max_retries": 3 }
+    ]
+  },
+
   "vars": {
-    "SALSA_BASE_URL": "https://api.salsa.dev"
-  }
+    "SALSA_API_BASE": "https://api.salsa.dev/v1",
+    "SALSA_SANDBOX_BASE": "https://api.sandbox.salsa.dev/v1",
+    "ENV": "development"
+  },
+
+  // Set via: wrangler secret put SALSA_API_KEY
+  // Set via: wrangler secret put SALSA_PARTNER_ID
+  // Set via: wrangler secret put JWT_SECRET
+
+  "routes": [
+    { "pattern": "payroll.insighthunter.app/*", "zone_name": "insighthunter.app" }
+  ]
 }
